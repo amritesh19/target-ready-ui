@@ -6,6 +6,8 @@ import Calendar from "./Calendar";
 import Class from "./Class/index";
 import Instructor from "./Instructor/index";
 import ViewTimeTable from "./ViewTimeTable";
+// import WeeklyView from "./WeeklyView";
+import TimeTable from"./TimeTable";
 
 const PageRoutes = () => {
   return (
@@ -16,6 +18,7 @@ const PageRoutes = () => {
       <Route exact path="/class" element={<Class />} />
       <Route exact path="/instructor" element={<Instructor />} />
       <Route exact path="/viewtimetable" element={<ViewTimeTable />} />
+      <Route exact path="/timetable" element={<TimeTable />} />
       <Route path="*" element={<NotFound />} />
     </Routes>
   );

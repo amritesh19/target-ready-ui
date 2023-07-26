@@ -14,6 +14,7 @@ import {
   Box
 } from "@mui/material";
 import './index.css';
+import { left } from "@popperjs/core";
 
 const CustomTableContainer = styled(TableContainer)({
   maxWidth: 900,
@@ -48,8 +49,45 @@ const TimeTable = () => {
   ];
 
   return (
-    <CustomTableContainer component={Paper}>
-      <Table>
+    <>
+    {/* <Grid
+      container
+      justifyContent="center"
+      alignItems="center"
+      //style={{ height: "70vh" }}
+    > */}
+    <Card
+    sx={{
+      backgroundColor:'#aabce7',
+      marginLeft:'45%',
+      marginRight:'45%',
+      marginTop:'1%',
+      fontWeight:'bold'
+    }}
+    >
+      {/* <CardContent>View: Weekly</CardContent> */}
+    </Card>
+    {/* </></Grid>  */}
+    {/* 
+    <Box
+    sx={{
+      marginLeft:'50%',
+      marginTop:'10%',
+      width: 100,
+      height: 50,
+      backgroundColor: '#aabce7;'
+    }}
+    >Hello</Box> */}
+    <CustomTableContainer component={Paper}
+    sx={{
+      width: 1900,
+      height: 450,
+      marginLeft:'-20%',
+      overflow: 'auto'
+      
+    }}
+    >
+      <Table >
         <TableHead>
           <TableRow >
             <TableCell id="bold">Time Slot</TableCell>
@@ -77,6 +115,7 @@ const TimeTable = () => {
         </TableBody>
       </Table>
     </CustomTableContainer>
+    </>
   );
 };
 

@@ -4,6 +4,8 @@ import { Tabs, Tab, Box } from "@mui/material";
 import { useContext } from "react";
 import { UserContext } from "../UserContext";
 import ViewTimeTable from "../ViewTimeTable";
+import WeeklyView from "../WeeklyView";
+import { TabList } from "@mui/lab";
 
 const CalendarContainer = styled(Box)({
   maxWidth: 600,
@@ -29,11 +31,13 @@ const Calendar = () => {
         textColor="primary"
         centered
       >
-        <Tab label="Day View" />
-        <Tab label="Week View" />
+        {/* <TabList> */}
+          <Tab label="Day View" />
+          <Tab label="Week View" />
+        {/* </TabList> */}
       </Tabs>
       {selectedTab === 0 && <ViewTimeTable/>}
-      {selectedTab === 1 && <div>Week View Content</div>}
+      {selectedTab === 1 && <WeeklyView/> }
     </CalendarContainer>
   );
 };
