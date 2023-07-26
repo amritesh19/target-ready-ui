@@ -13,12 +13,13 @@ import {
 
   MenuItem,
 } from "@mui/material";
-import DatePicker from "@mui/lab/DatePicker";
+
 const CustomTableContainer = styled(TableContainer)({
   maxWidth: 900,
   margin: "auto",
-  marginTop: "16px",
-  paddingBottom: "80px", // Adjust this value based on your footer's height and any additional padding you want above the footer
+  marginTop: "1vh",
+  marginBottom: "1vh",
+  // paddingBottom: "16px", // Adjust this value based on your footer's height and any additional padding you want above the footer
 });
 
 const Container = styled("div")({
@@ -109,20 +110,20 @@ const ViewTimeTable = () => {
   return (
     <div>
       <Container>
-        <FlexRow>
+        {/* <FlexRow>
           <CalenderHeadline>Calendar Headline</CalenderHeadline>
           <LogoutButton variant="contained" color="secondary">Logout</LogoutButton>
-        </FlexRow>
+        </FlexRow> */}
       
-        <Button
+        {/* <Button
           variant="contained"
           color="primary"
           onClick={handleViewOptionClick}
         >
           View Daily
-        </Button>
+        </Button> */}
         {/* View Options Menu */}
-        <Menu
+        {/* <Menu
           anchorEl={viewOption}
           open={Boolean(viewOption)}
           onClose={handleViewOptionClose}
@@ -136,7 +137,7 @@ const ViewTimeTable = () => {
           <MenuItem onClick={() => handleViewOptionSelect("Option 3")}>
             Option 3
           </MenuItem>
-        </Menu>
+        </Menu> */}
         {/* <DatePicker
           label="Choose Date"
           value={selectedDate}
@@ -145,7 +146,7 @@ const ViewTimeTable = () => {
           openTo="day"
           format="MM/dd/yyyy"
         /> */}
-         <input
+         <input style={{marginTop:'16px'}}
           type="date"
           value={selectedDate}
           onChange={(e) => setSelectedDate(e.target.value)}

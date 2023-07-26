@@ -3,6 +3,7 @@ import { styled } from "@mui/material/styles";
 import { Tabs, Tab, Box } from "@mui/material";
 import { useContext } from "react";
 import { UserContext } from "../UserContext";
+import ViewTimeTable from "../ViewTimeTable";
 
 const CalendarContainer = styled(Box)({
   maxWidth: 600,
@@ -31,7 +32,7 @@ const Calendar = () => {
         <Tab label="Day View" />
         <Tab label="Week View" />
       </Tabs>
-      {selectedTab === 0 && <div>Day View Content</div>}
+      {selectedTab === 0 && <ViewTimeTable/>}
       {selectedTab === 1 && <div>Week View Content</div>}
     </CalendarContainer>
   );
