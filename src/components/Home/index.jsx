@@ -1,10 +1,21 @@
-import { Card } from "@mui/material"
+import { Card } from "@mui/material";
+import { useContext } from "react";
+import { UserContext } from "../UserContext";
+import Login from "../Login";
 
 const Home = () => {
-    return (
-        <Card className="App-Card">
-            <h3>Home</h3>
-        </Card>
-    )
-}
+  const { user } = useContext(UserContext);
+
+  return (
+    <div>
+      {user ? (
+        <div>
+          <h1>Welcome, {user.id}!</h1>
+        </div>
+      ) : (
+        <Login />
+      )}
+    </div>
+  );
+};
 export default Home;
