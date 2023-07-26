@@ -6,6 +6,7 @@ import Contact from "./Contact";
 import NotFound from "./NotFound";
 import Calendar from "./Calendar";
 import TimeTable from "./TimeTable/index";
+import ViewTimeTable from "./ViewTimeTable";
 
 const PageRoutes = () => {
   return (
@@ -16,6 +17,7 @@ const PageRoutes = () => {
       <Route exact path="/student" element={<Student />} />
       <Route exact path="/calendar" element={<Calendar />} />
       <Route exact path="/timetable" element={<TimeTable />} />
+      <Route exact path="/viewtimetable" element={<ViewTimeTable />} />
       <Route path="*" element={<NotFound />} />
     </Routes>
   );
