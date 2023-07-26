@@ -1,64 +1,39 @@
 import React, { useState } from "react";
-import {
-  TextField,
-  Button,
-  Grid,
-  Card,
-  CardContent,
-  FormControl,
-  InputLabel,
-  Select,
-  MenuItem,
-} from "@mui/material";
+import { styled } from "@mui/material/styles";
+import { Tabs, Tab, Box } from "@mui/material";
+import { useContext } from "react";
+import { UserContext } from "../UserContext";
+
+const CalendarContainer = styled(Box)({
+  maxWidth: 600,
+  margin: "auto",
+  marginTop: "16px",
+});
 
 const Calendar = () => {
-  const [role, setRole] = useState("");
-  const [id, setId] = useState("");
+  const [selectedTab, setSelectedTab] = useState(0);
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    console.log("Role:", role, "ID:", id);
+  const { user } = useContext(UserContext);
+
+  const handleTabChange = (event, newValue) => {
+    setSelectedTab(newValue);
   };
 
   return (
-    <Grid
-      container
-      justifyContent="center"
-      alignItems="center"
-      style={{ height: "70vh" }}
-    >
-      <Card>
-        <CardContent>
-          <form onSubmit={handleSubmit}>
-            <FormControl fullWidth margin="normal">
-              <InputLabel>Role *</InputLabel>
-              <Select
-                value={role}
-                onChange={(e) => setRole(e.target.value)}
-                required
-                label="Role"
-              >
-                <MenuItem value="Admin">Admin</MenuItem>
-                <MenuItem value="Student">Student</MenuItem>
-                <MenuItem value="Instructor">Instructor</MenuItem>
-              </Select>
-            </FormControl>
-            <TextField
-              fullWidth
-              margin="normal"
-              label="ID"
-              variant="outlined"
-              value={id}
-              onChange={(e) => setId(e.target.value)}
-              required
-            />
-            <Button fullWidth variant="contained" color="primary" type="submit">
-              Submit
-            </Button>
-          </form>
-        </CardContent>
-      </Card>
-    </Grid>
+    <CalendarContainer>
+      <Tabs
+        value={selectedTab}
+        onChange={handleTabChange}
+        indicatorColor="primary"
+        textColor="primary"
+        centered
+      >
+        <Tab label="Day View" />
+        <Tab label="Week View" />
+      </Tabs>
+      {selectedTab === 0 && <div>Day View Content</div>}
+      {selectedTab === 1 && <div>Week View Content</div>}
+    </CalendarContainer>
   );
 };
 
