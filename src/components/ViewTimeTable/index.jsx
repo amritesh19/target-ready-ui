@@ -19,7 +19,7 @@ const CustomTableContainer = styled(TableContainer)({
   margin: "auto",
   marginTop: "1vh",
   marginBottom: "1vh",
-  maxHeight: "65vh"
+  maxHeight: "60vh"
   // paddingBottom: "16px", // Adjust this value based on your footer's height and any additional padding you want above the footer
 });
 
