@@ -11,26 +11,40 @@ const Instructor = () => {
     // Add more instructor data here
   ];
 
+  const myStyle = {
+    display: "flex",
+    alignItem: "center",
+    height: "100%",
+    border:'5px solid black',
+    background:'blue'
+
+  }
+  const myStyle2 = {
+    position:"absolute",
+    top:"50%",
+    left:"30%",
+    transform: "translate(0px,-50%)",
+  }
   return (
-    <Card className="App-Card">
-      <h3>List of Instructors</h3>
-      <TableContainer component={Paper}>
+    <Card className="App-Card" style={myStyle2}>
+      <h3 style={{border:'1px solid black',padding:'15px'}}>List of Instructors</h3>
+      <TableContainer component={Paper} >
       <Table>
         <TableHead>
-          <TableRow>
-            <TableCell>Serial Number</TableCell>
-            <TableCell>Instructor ID</TableCell>
-            <TableCell>Instructor Name</TableCell>
-            <TableCell>Instructor Contact</TableCell>
+          <TableRow style={{border:'1px solid black'}}>
+            <TableCell style={{fontWeight:'bold', background:'#aabce7',border:'1px solid black' }}>Serial Number</TableCell>
+            <TableCell style={{fontWeight:'bold', background:'#aabce7',border:'1px solid black'}}>Instructor ID</TableCell>
+            <TableCell style={{fontWeight:'bold', background:'#aabce7',border:'1px solid black'}}>Instructor Name</TableCell>
+            <TableCell style={{fontWeight:'bold', background:'#aabce7',border:'1px solid black'}}>Instructor Contact</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           {instructorData.map((instructor) => (
-            <TableRow key={instructor.instructorId}>
-              <TableCell>{instructor.serialNumber}</TableCell>
-              <TableCell>{instructor.instructorId}</TableCell>
-              <TableCell>{instructor.instructorName}</TableCell>
-              <TableCell>{instructor.instructorContact}</TableCell>
+            <TableRow key={instructor.instructorId} >
+              <TableCell style={{border:'1px solid black'}}>{instructor.serialNumber}</TableCell>
+              <TableCell style={{border:'1px solid black'}}>{instructor.instructorId}</TableCell>
+              <TableCell style={{border:'1px solid black'}}>{instructor.instructorName}</TableCell>
+              <TableCell style={{border:'1px solid black'}}>{instructor.instructorContact}</TableCell>
             </TableRow>
           ))}
         </TableBody>
