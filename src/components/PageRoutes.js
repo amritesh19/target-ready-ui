@@ -7,6 +7,7 @@ import Class from "./Class/index";
 import Instructor from "./Instructor/index";
 import ViewTimeTable from "./ViewTimeTable";
 // import WeeklyView from "./WeeklyView";
+import Course from "./Course";
 import TimeTable from"./TimeTable";
 
 const PageRoutes = () => {
@@ -16,6 +17,7 @@ const PageRoutes = () => {
       <Route exact path="/about" element={<About />} />
       <Route exact path="/calendar" element={<Calendar />} />
       <Route exact path="/class" element={<Class />} />
+      <Route exact path="/course" element={<Course />} />
       <Route exact path="/instructor" element={<Instructor />} />
       <Route exact path="/viewtimetable" element={<ViewTimeTable />} />
       <Route exact path="/timetable" element={<TimeTable />} />
