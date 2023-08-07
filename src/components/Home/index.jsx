@@ -10,7 +10,9 @@ const Home = () => {
     <div>
       {user ? (
         <div>
-          <h1>Welcome, {user.id}!</h1>
+          <center>
+            <h1>Welcome, {user.role} Anand!</h1>
+          </center>
         </div>
       ) : (
         <Login />

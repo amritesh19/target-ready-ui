@@ -134,6 +134,7 @@ const Instructor = () => {
               <TableCell style={titleStyles}>Instructor ID</TableCell>
               <TableCell style={titleStyles}>Instructor Name</TableCell>
               <TableCell style={titleStyles}>Instructor Contact</TableCell>
+              <TableCell style={titleStyles}>Update/Delete</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>

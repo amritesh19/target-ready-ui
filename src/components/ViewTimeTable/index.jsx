@@ -1,4 +1,4 @@
-import React, { useState,useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { styled } from "@mui/material/styles";
 import {
   TableContainer,
@@ -10,7 +10,6 @@ import {
   Paper,
   Button,
   Menu,
-
   MenuItem,
 } from "@mui/material";
 
@@ -19,7 +18,7 @@ const CustomTableContainer = styled(TableContainer)({
   margin: "auto",
   marginTop: "1vh",
   marginBottom: "1vh",
-  maxHeight: "60vh"
+  maxHeight: "60vh",
   // paddingBottom: "16px", // Adjust this value based on your footer's height and any additional padding you want above the footer
 });
 
@@ -45,7 +44,6 @@ const LogoutButton = styled(Button)({
   marginLeft: "auto",
 });
 
-
 const ViewTimeTable = () => {
   useEffect(() => {
     setViewOption(null);
@@ -59,7 +57,7 @@ const ViewTimeTable = () => {
   const handleViewOptionClick = (event) => {
     setViewOption(event.currentTarget);
   };
-  
+
   const handleViewOptionClose = () => {
     setViewOption(null);
   };
@@ -69,40 +67,39 @@ const ViewTimeTable = () => {
     // You can add logic here to show different content based on the selected option
     console.log("Selected View Option:", option);
   };
-  
 
   const handleDateSelect = (date) => {
     setSelectedDate(date);
   };
 
   const timeSlots = [
-    "9:00-10:00",
+    "09:00-10:00",
     "10:00-11:00",
     "11:00-12:00",
-    "12:00-1:00",
-    "1:00-2:00",
-    "2:00-3:00",
-    "3:00-4:00",
-    "4:00-5:00",
+    "12:00-01:00",
+    "01:00-02:00",
+    "02:00-03:00",
+    "03:00-04:00",
+    "04:00-05:00",
   ];
 
   const scheduleData = [
     {
-      slot: "9:00-10:00",
+      slot: "09:00-10:00",
       subject: "Math",
-      instructor: "John Doe",
+      instructor: "Rahul K",
       location: "Room A101",
     },
     {
       slot: "10:00-11:00",
       subject: "Science",
-      instructor: "Jane Smith",
+      instructor: "Suman Mishra",
       location: "Room B203",
     },
     {
-      slot: "12:00-1:00",
+      slot: "12:00-01:00",
       subject: "History",
-      instructor: "Michael Johnson",
+      instructor: "Kalyan P",
       location: "Room C307",
     },
     // Add more schedule data for other slots, subjects, instructors, and locations
@@ -115,7 +112,7 @@ const ViewTimeTable = () => {
           <CalenderHeadline>Calendar Headline</CalenderHeadline>
           <LogoutButton variant="contained" color="secondary">Logout</LogoutButton>
         </FlexRow> */}
-      
+
         {/* <Button
           variant="contained"
           color="primary"
@@ -147,7 +144,8 @@ const ViewTimeTable = () => {
           openTo="day"
           format="MM/dd/yyyy"
         /> */}
-         <input style={{marginTop:'16px'}}
+        <input
+          style={{ marginTop: "16px" }}
           type="date"
           value={selectedDate}
           onChange={(e) => setSelectedDate(e.target.value)}
@@ -157,22 +155,34 @@ const ViewTimeTable = () => {
         <Table style={{ border: "1px solid black" }}>
           <TableHead>
             <TableRow>
-              <TableCell style={{ border: "1px solid black" }}>Slot</TableCell>
-              <TableCell style={{ border: "1px solid black" }}>Schedule</TableCell>
+              <TableCell style={{ border: "1px solid black" }}>
+                Slot{"  "}
+              </TableCell>
+              <TableCell style={{ border: "1px solid black" }}>
+                Schedule
+              </TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
             {timeSlots.map((slot) => {
-              const slotSchedule = scheduleData.find((item) => item.slot === slot);
+              const slotSchedule = scheduleData.find(
+                (item) => item.slot === slot
+              );
               return (
                 <TableRow key={slot} style={{ border: "1px solid black" }}>
-                  <TableCell style={{ border: "1px solid black" }}>{slot}</TableCell>
+                  <TableCell style={{ border: "1px solid black" }}>
+                    {slot}
+                  </TableCell>
                   <TableCell style={{ border: "1px solid black" }}>
                     {slotSchedule ? (
                       <div>
-                        <p><strong>Subject:</strong> {slotSchedule.subject}&nbsp;&nbsp;&nbsp;
-                        <strong>Instructor:</strong> {slotSchedule.instructor}&nbsp;&nbsp;&nbsp;
-                        <strong>Location:</strong> {slotSchedule.location}</p>
+                        <p>
+                          <strong>Subject:</strong> {slotSchedule.subject}
+                          &nbsp;&nbsp;&nbsp;
+                          <strong>Instructor:</strong> {slotSchedule.instructor}
+                          &nbsp;&nbsp;&nbsp;
+                          <strong>Location:</strong> {slotSchedule.location}
+                        </p>
                       </div>
                     ) : (
                       <p>No schedule available</p>
