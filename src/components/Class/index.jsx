@@ -3,7 +3,7 @@ import React from "react";
 
 const tableStyles = {
   margin: "0 auto", // To center the table
-  maxWidth: "800px", // You can adjust the width as per your requirement
+  maxWidth: "800px",
   // padding:'5px'
 };
 
@@ -18,7 +18,6 @@ const dataStyle = {
 };
 
 const Class = () => {
-  // Sample data, replace this with your actual data
   const classData = [
     {
       serialNumber: 1,

@@ -3,7 +3,7 @@ import { styled } from "@mui/material/styles";
 import { Tabs, Tab, Box } from "@mui/material";
 import { useContext } from "react";
 import { UserContext } from "../UserContext";
-import ViewTimeTable from "../ViewTimeTable";
+import DayView from "../DayView";
 import WeeklyView from "../WeeklyView";
 import { TabList } from "@mui/lab";
 
@@ -32,12 +32,12 @@ const Calendar = () => {
         centered
       >
         {/* <TabList> */}
-          <Tab label="Day View" />
-          <Tab label="Week View" />
+        <Tab label="Day View" />
+        <Tab label="Week View" />
         {/* </TabList> */}
       </Tabs>
-      {selectedTab === 0 && <ViewTimeTable/>}
-      {selectedTab === 1 && <WeeklyView/> }
+      {selectedTab === 0 && <DayView />}
+      {selectedTab === 1 && <WeeklyView />}
     </CalendarContainer>
   );
 };

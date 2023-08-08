@@ -29,44 +29,8 @@ const Container = styled("div")({
   gap: "16px",
 });
 
-const FlexRow = styled("div")({
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "space-between",
-  width: "100%",
-});
-
-const CalenderHeadline = styled("h2")({
-  margin: "0",
-});
-
-const LogoutButton = styled(Button)({
-  marginLeft: "auto",
-});
-
-const ViewTimeTable = () => {
-  useEffect(() => {
-    setViewOption(null);
-  }, []);
-  const [viewOption, setViewOption] = useState("daily"); // State for view option: daily or monthly
+const DayView = () => {
   const [selectedDate, setSelectedDate] = useState(null); // State for selected date
-
-  const handleViewOptionChange = (option) => {
-    setViewOption(option);
-  };
-  const handleViewOptionClick = (event) => {
-    setViewOption(event.currentTarget);
-  };
-
-  const handleViewOptionClose = () => {
-    setViewOption(null);
-  };
-  const handleViewOptionSelect = (option) => {
-    setViewOption(null);
-    // Handle the selected view option
-    // You can add logic here to show different content based on the selected option
-    console.log("Selected View Option:", option);
-  };
 
   const handleDateSelect = (date) => {
     setSelectedDate(date);
@@ -108,42 +72,6 @@ const ViewTimeTable = () => {
   return (
     <div>
       <Container>
-        {/* <FlexRow>
-          <CalenderHeadline>Calendar Headline</CalenderHeadline>
-          <LogoutButton variant="contained" color="secondary">Logout</LogoutButton>
-        </FlexRow> */}
-
-        {/* <Button
-          variant="contained"
-          color="primary"
-          onClick={handleViewOptionClick}
-        >
-          View Daily
-        </Button> */}
-        {/* View Options Menu */}
-        {/* <Menu
-          anchorEl={viewOption}
-          open={Boolean(viewOption)}
-          onClose={handleViewOptionClose}
-        >
-          <MenuItem onClick={() => handleViewOptionSelect("Option 1")}>
-            Option 1
-          </MenuItem>
-          <MenuItem onClick={() => handleViewOptionSelect("Option 2")}>
-            Option 2
-          </MenuItem>
-          <MenuItem onClick={() => handleViewOptionSelect("Option 3")}>
-            Option 3
-          </MenuItem>
-        </Menu> */}
-        {/* <DatePicker
-          label="Choose Date"
-          value={selectedDate}
-          onChange={(date) => handleDateSelect(date)}
-          animateYearScrolling
-          openTo="day"
-          format="MM/dd/yyyy"
-        /> */}
         <input
           style={{ marginTop: "16px" }}
           type="date"
@@ -198,4 +126,4 @@ const ViewTimeTable = () => {
   );
 };
 
-export default ViewTimeTable;
+export default DayView;
