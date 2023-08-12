@@ -71,7 +71,7 @@ const SideNavigation = () => {
         <MenuItem onClick={handleHome}>Home</MenuItem>
         {/* <MenuItem onClick={handleStudent}>Student</MenuItem> */}
 
-        {user && user.role === "Admin" && (
+        {user && user.role === "admin" && (
           <div>
             <MenuItem onClick={handleClass}>Class</MenuItem>
             <MenuItem onClick={handleInstructor}>Instructor</MenuItem>

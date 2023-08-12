@@ -9,21 +9,35 @@ import {
   InputLabel,
   Select,
   MenuItem,
+  Alert,
 } from "@mui/material";
 import { UserContext } from "../UserContext";
+import axios from "axios";
+import { useAlert } from "../AlertContext";
 
 const Login = () => {
   const [role, setRole] = useState("");
   const [id, setId] = useState("");
 
   const { user, login } = useContext(UserContext);
+  const alert = useAlert();
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
     console.log("Role:", role, "ID:", id);
 
-    const userData = { role, id };
-    login(userData);
+    try {
+      const response = await axios.get(
+        `http://localhost:8087/login/${role}/${id}`
+      );
+      //console.log(response);
+      alert.showAlertWithMessage(response.data, "success");
+      const userData = { role, id };
+      login(userData);
+    } catch (error) {
+      //console.log(error);
+      alert.showAlertWithMessage(error.response.data.error, "error");
+    }
   };
 
   return (
@@ -44,9 +58,9 @@ const Login = () => {
                 required
                 label="Role"
               >
-                <MenuItem value="Admin">Admin</MenuItem>
-                <MenuItem value="Student">Student</MenuItem>
-                <MenuItem value="Instructor">Instructor</MenuItem>
+                <MenuItem value="admin">Admin</MenuItem>
+                <MenuItem value="student">Student</MenuItem>
+                <MenuItem value="instructor">Instructor</MenuItem>
               </Select>
             </FormControl>
             <TextField
