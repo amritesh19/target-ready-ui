@@ -20,12 +20,13 @@ import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 
 const tableStyles = {
-  margin: "0 auto", // To center the table
-  maxWidth: "800px", // You can adjust the width as per your requirement
-  padding: "10px", // Adding padding to the table
-  position: "absolute",
-  top: "30%",
-  left: "20%",
+    maxWidth: 900,
+    margin: "auto",
+    marginTop: "100px",
+    width: 900,
+    height: 350,
+    marginLeft: "20%",
+    overflow: "auto",
 };
 
 const titleStyles = {
@@ -46,6 +47,8 @@ const headingStyle = {
 const Instructor = () => {
   const [instructorData, setInstructorData] = useState([]);
   const [openEditDialog, setOpenEditDialog] = useState(false);
+  const [contactErrorText, setContactErrorText] = useState("");
+  const [openAddDialog, setOpenAddDialog] = useState(false);
   const [editData, setEditData] = useState({
     instructorId: "",
     instructorName: "",
@@ -54,9 +57,12 @@ const Instructor = () => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:8085/admin/instructors")
+      .get("http://localhost:8087/instructors")
       .then((response) => {
+        console.log(response.data);
+
         setInstructorData(response.data);
+        console.log(instructorData);
       })
       .catch((error) => {
         console.error("Error fetching instructor data:", error);
@@ -65,56 +71,82 @@ const Instructor = () => {
 
   const handleEdit = (instructorId) => {
     const instructor = instructorData.find(
-      (instructor) => instructor.instructor_id === instructorId
+      (instructor) => instructor.instructorId === instructorId
     );
     if (instructor) {
       setEditData({
-        instructorId: instructor.instructor_id,
-        instructorName: instructor.instructor_name,
-        instructorContact: instructor.instructor_contact,
+        instructorId: instructor.instructorId,
+        instructorName: instructor.instructorName,
+        instructorContact: instructor.instructorContact,
       });
       setOpenEditDialog(true);
     }
     console.log(editData);
   };
 
-  const handleSaveEdit = () => {
+  const handleSaveEdit = async (event) => {
+    event.preventDefault();
     console.log(editData);
-    axios
-      .put(
-        `http://localhost:8085/admin/instructors/${editData.instructorId}/${editData.instructorName}/${editData.instructorContact}`,
-        {
-          instructorName: editData.instructorName,
-          instructorContact: editData.instructorContact,
-        }
-      )
-      .then((response) => {
-        setInstructorData((prevData) =>
+    try{
+         const response = await axios.put(
+           `http://localhost:8087/instructors/${editData.instructorId}/${editData.instructorName}/${editData.instructorContact}`,
+            {
+              instructorName: editData.instructorName,
+              instructorContact: editData.instructorContact,
+            }
+         );
+         setInstructorData((prevData) =>
           prevData.map((instructor) =>
-            instructor.instructor_id === editData.instructorId
+            instructor.instructorId === editData.instructorId
               ? {
                   ...instructor,
-                  instructor_name: editData.instructorName,
-                  instructor_contact: editData.instructorContact,
+                  instructorName: editData.instructorName,
+                  instructorContact: editData.instructorContact,
                 }
               : instructor
-          )
-        );
-        setOpenEditDialog(false);
-      })
-      .catch((error) => {
-        console.error("Error updating instructor data:", error);
-        setOpenEditDialog(false);
-      });
+            )
+          );
+          setOpenEditDialog(false);
+    }catch(error){
+      setContactErrorText("Contact already exists!");
+      console.error("Error updating instructor data:", error);
+      setOpenEditDialog(false);
+    };
   };
+
+  const handleAdd = () => {
+
+        setOpenAddDialog(true);
+
+    };
+
+    const handleSaveAdd = () => {
+        console.log(newInstructorData);
+        axios
+          .post(
+            `http://localhost:8087/instructors`,
+            { /*InstructorId: newInstructorData.instructorId,*/
+              InstructorName: newStudentData.studentName,
+              InstructorContact: newStudentData.studentContact,
+            }
+          )
+          .then((response) => {
+            console.log(response);
+            setOpenEditDialog(false);
+          })
+          .catch((error) => {
+            console.error("Error adding instructor data:", error);
+            setOpenEditDialog(false);
+          });
+      };
 
   const handleDelete = (instructorId) => {
     axios
-      .delete(`http://localhost:8085/admin/instructors/${instructorId}`)
+      .delete(`http://localhost:8087/instructors/${instructorId}`)
       .then((response) => {
         setInstructorData((prevData) =>
           prevData.filter(
-            (instructor) => instructor.instructor_id !== instructorId
+            (instructor) => instructor.instructorId !== instructorId
           )
         );
       })
@@ -125,7 +157,10 @@ const Instructor = () => {
 
   return (
     <card className="App-card">
-      <div style={headingStyle}>LIST OF INSTRUCTOR</div>
+      <div>
+      <Button style={{ display: 'flex', justifyContent: 'middle-right' }} onClick={() => handleAdd()}>Add New Instructor</Button>
+      <div style={headingStyle}>LIST OF INSTRUCTOR</div><br></br><br></br>
+      </div>
       <TableContainer component={Paper} style={tableStyles}>
         <Table>
           <TableHead>
@@ -142,24 +177,24 @@ const Instructor = () => {
               <TableRow key={instructor.instructorId}>
                 <TableCell style={{ padding: "10px" }}>{index + 1}</TableCell>
                 <TableCell style={{ padding: "10px" }}>
-                  {instructor.instructor_id}
+                  {instructor.instructorId}
                 </TableCell>
                 <TableCell style={{ padding: "10px" }}>
-                  {instructor.instructor_name}
+                  {instructor.instructorName}
                 </TableCell>
                 <TableCell style={{ padding: "10px" }}>
-                  {instructor.instructor_contact}
+                  {instructor.instructorContact}
                 </TableCell>
                 <TableCell style={{ padding: "10px" }}>
                   <IconButton
                     aria-label="edit"
-                    onClick={() => handleEdit(instructor.instructor_id)}
+                    onClick={() => handleEdit(instructor.instructorId)}
                   >
                     <EditIcon />
                   </IconButton>
                   <IconButton
                     aria-label="delete"
-                    onClick={() => handleDelete(instructor.instructor_id)}
+                    onClick={() => handleDelete(instructor.instructorId)}
                   >
                     <DeleteIcon />
                   </IconButton>
@@ -169,7 +204,7 @@ const Instructor = () => {
           </TableBody>
         </Table>
       </TableContainer>
-      <Dialog open={openEditDialog} onClose={() => setOpenEditDialog(false)}>
+      <Dialog open={openEditDialog} onClose={() => setOpenEditDialog(false)} PaperProps={{className: 'dialog-box' }} >
         <DialogTitle>Edit Instructor</DialogTitle>
         <DialogContent>
           <TextField
@@ -178,16 +213,21 @@ const Instructor = () => {
             onChange={(e) =>
               setEditData({ ...editData, instructorName: e.target.value })
             }
+            style={{ marginBottom: '10px' ,marginTop: '10px'}}
             fullWidth
           />
           <TextField
             label="Instructor Contact"
             value={editData.instructorContact}
             onChange={(e) =>
-              setEditData({ ...editData, instructorContact: e.target.value })
+              {
+              setContactErrorText('');
+              setEditData({ ...editData, instructorContact: e.target.value });
+              }
             }
             fullWidth
           />
+          <div id="contact_error">{contactErrorText}</div>
         </DialogContent>
         <DialogActions>
           <Button onClick={() => setOpenEditDialog(false)}>Cancel</Button>
@@ -196,6 +236,38 @@ const Instructor = () => {
           </Button>
         </DialogActions>
       </Dialog>
+
+       <Dialog open={openAddDialog} onClose={() => setOpenAddDialog(false)} PaperProps={{ className: 'dialog-box' }}>
+                  <DialogTitle>Add Instructor</DialogTitle>
+                  <DialogContent>
+                    <TextField
+                      label="Instructor Name"
+                      value={newInstructorData.instructorName}
+                      onChange={(e) =>
+                        setNewInstructorData({ ...newInstructorData, instructorName: e.target.value })
+                      }
+                      style={{ marginBottom: '10px' ,marginTop: '10px'}}
+                      fullWidth
+                    />
+
+                    <TextField
+                      label="Instructor Contact"
+                      value={newInstructorData.instructorContact}
+                      onChange={(e) =>
+                        setNewInstructorData({ ...newInstructorData, InstructorContact: e.target.value })
+                      }
+                      style={{ marginBottom: '10px'}}
+                      fullWidth
+                    />
+                  </DialogContent>
+                  <DialogActions>
+                    <Button onClick={() => setOpenAddDialog(false)}>Cancel</Button>
+                    <Button onClick={handleSaveAdd} variant="contained" color="primary">
+                      Save
+                    </Button>
+                  </DialogActions>
+                </Dialog>
+
     </card>
   );
 };

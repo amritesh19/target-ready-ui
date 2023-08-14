@@ -16,7 +16,7 @@ export const AlertProvider = ({ children }) => {
     setShowAlert(true);
     setTimeout(() => {
       setShowAlert(false);
-    }, 3000);
+    }, 1500);
   };
 
   const value = {

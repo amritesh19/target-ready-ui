@@ -75,6 +75,7 @@ const SideNavigation = () => {
           <div>
             <MenuItem onClick={handleClass}>Class</MenuItem>
             <MenuItem onClick={handleInstructor}>Instructor</MenuItem>
+            <MenuItem onClick={handleStudent}>Student</MenuItem>
           </div>
         )}
 
