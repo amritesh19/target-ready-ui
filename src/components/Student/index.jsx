@@ -19,7 +19,7 @@ import {
 import './index.css';
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
-
+import { useAlert } from "../AlertContext";
 
 
 const tableStyles = {
@@ -42,10 +42,18 @@ const headingStyle = {
   // border:'1px solid black',
   position: "absolute",
   left: "45%",
-  top: "20%",
+  top: "15%",
   padding: "10px",
   boxShadow: "0px 0.5px 1px",
 };
+
+const buttonStyle ={
+    position:"absolute",
+    left: "68%",
+    top: "18%",
+    padding: "5px",
+    boxShadow: "0px 0.5px 1px",
+}
 
 const Student = () => {
   const [studentData, setStudentData] = useState([]);
@@ -53,6 +61,7 @@ const Student = () => {
   const [openEditDialog, setOpenEditDialog] = useState(false);
   const [contactErrorText, setContactErrorText] = useState("");
   const [openAddDialog, setOpenAddDialog] = useState(false);
+  const alert = useAlert();
   const [editData, setEditData] = useState({
     studentId: "",
     studentName: "",
@@ -61,19 +70,22 @@ const Student = () => {
   });
 
   useEffect(() => {
-    axios
-      .get("http://localhost:8087/students")
-      .then((response) => {
-        console.log(response.data);
-
-        setStudentData(response.data);
-        console.log(studentData);
-      })
-      .catch((error) => {
-        console.error("Error fetching student data:", error);
-      });
+    fetchData();
   }, []);
 
+  const fetchData = () => {
+    try{
+      axios
+        .get("http://localhost:8087/students")
+        .then((response) => {
+          console.log(response.data);
+          setStudentData(response.data);
+          console.log(studentData);
+        })
+    }catch(error){
+      console.error("Error fetching student data:", error);
+    };
+  };
   const handleEdit = (studentId) => {
     const student = studentData.find(
       (student) => student.studentId === studentId
@@ -101,7 +113,7 @@ const Student = () => {
     event.preventDefault();
     console.log(editData);
     try{
-             const response = await axios.put(
+        const response = await axios.put(
         `http://localhost:8087/students/${editData.studentId}/${editData.studentName}/${editData.classId}/${editData.studentContact}`,
         {
           studentName: editData.studentName,
@@ -122,6 +134,7 @@ const Student = () => {
           )
         );
         setOpenEditDialog(false);
+        alert.showAlertWithMessage(response.data, "success");
       }catch(error) {
         setContactErrorText("Contact already exists!");
         console.error("Error updating student data:", error);
@@ -133,7 +146,7 @@ const Student = () => {
     console.log(newStudentData);
     axios
       .post(
-        `http://localhost:8087/students`,
+        `http://localhost:8087/students/${newStudentData.studentName}/${newStudentData.classId}/${newStudentData.studentContact}`,
         {
           studentName: newStudentData.studentName,
           classId: newStudentData.classId,
@@ -142,11 +155,13 @@ const Student = () => {
       )
       .then((response) => {
         console.log(response);
-        setOpenEditDialog(false);
+        fetchData();
+        setOpenAddDialog(false);
+        alert.showAlertWithMessage(response.data, "success");
       })
       .catch((error) => {
         console.error("Error adding student data:", error);
-        setOpenEditDialog(false);
+        setOpenAddDialog(false);
       });
   };
   const handleDelete = (studentId) => {
@@ -158,6 +173,7 @@ const Student = () => {
             (student) => student.studentId !== studentId
           )
         );
+        alert.showAlertWithMessage(response.data, "success");
       })
       .catch((error) => {
         console.error("Error deleting student data:", error);
@@ -167,9 +183,10 @@ const Student = () => {
   return (
     <card className="App-card">
      <div>
-     <Button style={{ display: 'flex', justifyContent: 'middle-right', variant:'contained' }} onClick={() => handleAdd()}>Add New Student</Button>
       <div style={headingStyle}>LIST OF STUDENTS</div>
       </div>
+      <Button onClick={() => handleAdd()} style={buttonStyle} >Add New Student</Button>
+
       <TableContainer component={Paper} style={tableStyles}>
         <Table>
           <TableHead>
@@ -259,7 +276,7 @@ const Student = () => {
         </DialogContent>
         <DialogActions>
           <Button onClick={() => setOpenEditDialog(false)}>Cancel</Button>
-          <Button onClick={handleSaveEdit} variant="contained" color="primary">
+          <Button onClick={handleSaveEdit} variant="contained" color="primary" >
             Save
           </Button>
         </DialogActions>
@@ -299,7 +316,7 @@ const Student = () => {
           </DialogContent>
           <DialogActions>
             <Button onClick={() => setOpenAddDialog(false)}>Cancel</Button>
-            <Button onClick={handleSaveAdd} variant="contained" color="primary">
+            <Button onClick={handleSaveAdd} variant="contained" color="primary" >
               Save
             </Button>
           </DialogActions>
