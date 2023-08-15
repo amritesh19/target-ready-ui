@@ -14,11 +14,12 @@ import {
 import { UserContext } from "../UserContext";
 import axios from "axios";
 import { useAlert } from "../AlertContext";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
   const [role, setRole] = useState("");
   const [id, setId] = useState("");
-
+  const navigate = useNavigate();
   const { user, login } = useContext(UserContext);
   const alert = useAlert();
 
@@ -34,6 +35,7 @@ const Login = () => {
       alert.showAlertWithMessage(response.data, "success");
       const userData = { role, id };
       login(userData);
+      navigate("/calendar");
     } catch (error) {
       //console.log(error);
       alert.showAlertWithMessage(error.response.data.error, "error");
