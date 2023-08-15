@@ -18,6 +18,8 @@ import {
 } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
+import './index.css';
+import { useAlert } from "../AlertContext";
 
 const tableStyles = {
     maxWidth: 900,
@@ -39,16 +41,25 @@ const headingStyle = {
   // border:'1px solid black',
   position: "absolute",
   left: "45%",
-  top: "20%",
+  top: "15%",
   padding: "10px",
   boxShadow: "0px 0.5px 1px",
 };
+const buttonStyle ={
+    position:"absolute",
+    left: "68%",
+    top: "18%",
+    padding: "5px",
+    boxShadow: "0px 0.5px 1px",
+}
 
 const Instructor = () => {
   const [instructorData, setInstructorData] = useState([]);
   const [openEditDialog, setOpenEditDialog] = useState(false);
+  const [newInstructorData, setNewInstructorData] = useState([]);
   const [contactErrorText, setContactErrorText] = useState("");
   const [openAddDialog, setOpenAddDialog] = useState(false);
+  const alert = useAlert();
   const [editData, setEditData] = useState({
     instructorId: "",
     instructorName: "",
@@ -56,18 +67,23 @@ const Instructor = () => {
   });
 
   useEffect(() => {
-    axios
+    fetchData();
+  }, []);
+
+
+  const fetchData = () => {
+    try{
+      axios
       .get("http://localhost:8087/instructors")
       .then((response) => {
         console.log(response.data);
-
         setInstructorData(response.data);
         console.log(instructorData);
       })
-      .catch((error) => {
+    }catch(error) {
         console.error("Error fetching instructor data:", error);
-      });
-  }, []);
+    };
+  };
 
   const handleEdit = (instructorId) => {
     const instructor = instructorData.find(
@@ -107,6 +123,7 @@ const Instructor = () => {
             )
           );
           setOpenEditDialog(false);
+          alert.showAlertWithMessage(response.data, "success");
     }catch(error){
       setContactErrorText("Contact already exists!");
       console.error("Error updating instructor data:", error);
@@ -115,28 +132,31 @@ const Instructor = () => {
   };
 
   const handleAdd = () => {
+    setOpenAddDialog(true);
+  };
 
-        setOpenAddDialog(true);
-
-    };
-
-    const handleSaveAdd = () => {
+  const handleSaveAdd = () => {
+        console.log("hi");
         console.log(newInstructorData);
+        console.log("hi");
         axios
           .post(
-            `http://localhost:8087/instructors`,
-            { /*InstructorId: newInstructorData.instructorId,*/
-              InstructorName: newStudentData.studentName,
-              InstructorContact: newStudentData.studentContact,
+            `http://localhost:8087/instructors/${newInstructorData.instructorName}/${newInstructorData.instructorContact}`,
+            {
+              instructorName: newInstructorData.instructorName,
+              instructorContact: newInstructorData.instructorContact,
             }
           )
           .then((response) => {
             console.log(response);
-            setOpenEditDialog(false);
+            fetchData();
+           // setStatus({ type: 'success' });
+            setOpenAddDialog(false);
+            alert.showAlertWithMessage(response.data, "success");
           })
           .catch((error) => {
             console.error("Error adding instructor data:", error);
-            setOpenEditDialog(false);
+            setOpenAddDialog(false);
           });
       };
 
@@ -149,6 +169,7 @@ const Instructor = () => {
             (instructor) => instructor.instructorId !== instructorId
           )
         );
+        alert.showAlertWithMessage(response.data, "success");
       })
       .catch((error) => {
         console.error("Error deleting instructor data:", error);
@@ -158,9 +179,9 @@ const Instructor = () => {
   return (
     <card className="App-card">
       <div>
-      <Button style={{ display: 'flex', justifyContent: 'middle-right' }} onClick={() => handleAdd()}>Add New Instructor</Button>
-      <div style={headingStyle}>LIST OF INSTRUCTOR</div><br></br><br></br>
+      <div style={headingStyle}>LIST OF INSTRUCTOR</div>
       </div>
+      <Button style={buttonStyle} onClick={() => handleAdd()}>Add New Instructor</Button>
       <TableContainer component={Paper} style={tableStyles}>
         <Table>
           <TableHead>
@@ -204,7 +225,7 @@ const Instructor = () => {
           </TableBody>
         </Table>
       </TableContainer>
-      <Dialog open={openEditDialog} onClose={() => setOpenEditDialog(false)} PaperProps={{className: 'dialog-box' }} >
+      <Dialog open={openEditDialog} onClose={() => setOpenEditDialog(false)} PaperProps={{className: 'instructor-dialog-box' }} >
         <DialogTitle>Edit Instructor</DialogTitle>
         <DialogContent>
           <TextField
@@ -237,7 +258,7 @@ const Instructor = () => {
         </DialogActions>
       </Dialog>
 
-       <Dialog open={openAddDialog} onClose={() => setOpenAddDialog(false)} PaperProps={{ className: 'dialog-box' }}>
+       <Dialog open={openAddDialog} onClose={() => setOpenAddDialog(false)} PaperProps={{ className: 'instructor-dialog-box' }}>
                   <DialogTitle>Add Instructor</DialogTitle>
                   <DialogContent>
                     <TextField
@@ -254,15 +275,14 @@ const Instructor = () => {
                       label="Instructor Contact"
                       value={newInstructorData.instructorContact}
                       onChange={(e) =>
-                        setNewInstructorData({ ...newInstructorData, InstructorContact: e.target.value })
+                        setNewInstructorData({ ...newInstructorData, instructorContact: e.target.value })
                       }
-                      style={{ marginBottom: '10px'}}
                       fullWidth
                     />
                   </DialogContent>
                   <DialogActions>
-                    <Button onClick={() => setOpenAddDialog(false)}>Cancel</Button>
-                    <Button onClick={handleSaveAdd} variant="contained" color="primary">
+                    <Button style={{alignItems: 'center'}} onClick={() => setOpenAddDialog(false)}>Cancel</Button>
+                    <Button style={{alignItems: 'center'}} onClick={handleSaveAdd} variant="contained" color="primary">
                       Save
                     </Button>
                   </DialogActions>
