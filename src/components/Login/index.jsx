@@ -14,16 +14,20 @@ import {
 import { UserContext } from "../UserContext";
 import axios from "axios";
 import { useAlert } from "../AlertContext";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
   const [role, setRole] = useState("");
   const [id, setId] = useState("");
-
+  const navigate = useNavigate();
   const { user, login } = useContext(UserContext);
   const alert = useAlert();
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    localStorage.setItem('role',role);
+    localStorage.setItem('id',id);
+    let userStatus = localStorage.getItem('role');
     console.log("Role:", role, "ID:", id);
 
     try {
@@ -32,8 +36,10 @@ const Login = () => {
       );
       //console.log(response);
       alert.showAlertWithMessage(response.data, "success");
+      localStorage.setItem('classid',"");
       const userData = { role, id };
       login(userData);
+      //navigate("/calendar");
     } catch (error) {
       //console.log(error);
       alert.showAlertWithMessage(error.response.data.error, "error");

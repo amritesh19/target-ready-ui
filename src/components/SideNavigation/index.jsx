@@ -10,6 +10,7 @@ const SideNavigation = () => {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const navigate = useNavigate();
   const open = Boolean(anchorEl);
+  let userStatus = localStorage.getItem('role');
 
   const { user, logout } = React.useContext(UserContext);
 
@@ -27,6 +28,10 @@ const SideNavigation = () => {
     navigate("/student");
     handleClose();
   };
+  const handleCourse = () => {
+      navigate("/course");
+      handleClose();
+    };
 
   const handleCalendar = () => {
     navigate("/calendar");
@@ -44,6 +49,7 @@ const SideNavigation = () => {
   };
 
   const handleLogout = () => {
+   localStorage.setItem('role',null);
     navigate("/");
     handleClose();
     logout();
@@ -71,20 +77,21 @@ const SideNavigation = () => {
         <MenuItem onClick={handleHome}>Home</MenuItem>
         {/* <MenuItem onClick={handleStudent}>Student</MenuItem> */}
 
-        {user && user.role === "admin" && (
+        {(userStatus === "admin" ||(user && user.role === "admin")) && (
           <div>
             <MenuItem onClick={handleClass}>Class</MenuItem>
             <MenuItem onClick={handleInstructor}>Instructor</MenuItem>
             <MenuItem onClick={handleStudent}>Student</MenuItem>
+            <MenuItem onClick={handleCourse}>Course</MenuItem>
           </div>
-        )}
+         )}
 
-        {user && (
+         {(userStatus === "admin" ||user) && (
           <div>
             <MenuItem onClick={handleCalendar}>Calendar</MenuItem>
             <MenuItem onClick={handleLogout}>Logout</MenuItem>
           </div>
-        )}
+         )}
       </Menu>
     </>
   );

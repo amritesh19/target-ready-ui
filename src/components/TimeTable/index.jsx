@@ -51,7 +51,7 @@ const TimeTable = () => {
     <CustomTableContainer component={Paper}>
       <Table>
         <TableHead>
-          <TableRow >
+          <TableRow>
             <TableCell id="bold">Time Slot</TableCell>
             {timeSlots.map((slot) => (
               <TableCell key={slot}>{slot}</TableCell>

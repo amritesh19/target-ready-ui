@@ -68,7 +68,7 @@ const Instructor = () => {
 
   useEffect(() => {
     fetchData();
-  }, []);
+  },[]);
 
 
   const fetchData = () => {
@@ -132,6 +132,7 @@ const Instructor = () => {
   };
 
   const handleAdd = () => {
+    setNewInstructorData([]);
     setOpenAddDialog(true);
   };
 
@@ -160,6 +161,7 @@ const Instructor = () => {
           });
       };
 
+//first check if instructor id is in course if not then delete
   const handleDelete = (instructorId) => {
     axios
       .delete(`http://localhost:8087/instructors/${instructorId}`)

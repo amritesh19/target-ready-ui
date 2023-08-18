@@ -1,5 +1,5 @@
-import React from "react";
 import { Card } from "@mui/material";
+import React, { useState, useEffect } from "react";
 
 const tableStyles = {
   margin: "0 auto", // To center the table
@@ -14,34 +14,17 @@ const titleStyles = {
 };
 
 const Course = () => {
-  // Sample data, replace this with your actual data
-  const courseData = [
-    {
-      serialNumber: 1,
-      courseId: "C001",
-      courseName: "Maths",
-      courseInstructor: "Anand",
-    },
-    {
-      serialNumber: 2,
-      courseId: "C002",
-      courseName: "Physics",
-      courseInstructor: "Kalyan",
-    },
-    {
-      serialNumber: 3,
-      courseId: "C003",
-      courseName: "English",
-      courseInstructor: "Arun",
-    },
-    {
-      serialNumber: 4,
-      courseId: "C004",
-      courseName: "Hindi",
-      courseInstructor: "Rama",
-    },
-    // Add more course data here
-  ];
+  const [courseData, setCourseData] = useState([]);
+  const [newCourseData, setNewCourseData] = useState([]);
+  const [openEditDialog, setOpenEditDialog] = useState(false);
+  const [openAddDialog, setOpenAddDialog] = useState(false);
+  const [editData, setEditData] = useState({
+    courseId: "",
+    classId: "",
+    courseName: "",
+    instructorId: "",
+    location: "",
+  });
 
   return (
     <Card
@@ -62,8 +45,10 @@ const Course = () => {
             <tr>
               <th style={titleStyles}>Serial Number</th>
               <th style={titleStyles}>Course ID</th>
+              <th style={titleStyles}>Class ID</th>
               <th style={titleStyles}>Course Name</th>
               <th style={titleStyles}>Course Instructor</th>
+              <th style={titleStyles}>Location</th>
             </tr>
           </thead>
           <tbody>
