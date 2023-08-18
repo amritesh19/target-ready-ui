@@ -51,11 +51,30 @@ const Home = () => {
   }, [user]);
 
   const renderUserData = () => {
-    const fieldRows = [];
-    for (const [field, value] of Object.entries(userData)) {
+
+    let fieldRows = [];
+    for (let [field, value] of Object.entries(userData)) {
       fieldRows.push(
         <TableRow key={field}>
-          <TableCell>{field}</TableCell>
+          <TableCell>
+          {field.includes('classId') ? (
+                field = 'Class ID'
+              ) : field.includes('Name') ? (
+                field = 'Name'
+              ) : field.includes('Contact') ?(
+                field = 'Contact'
+              ):field.includes('Id')?(
+              field = 'ID'
+              ):''
+          }
+          </TableCell>
+
+//     const fieldRows = [];
+//     for (const [field, value] of Object.entries(userData)) {
+//       fieldRows.push(
+//         <TableRow key={field}>
+//           <TableCell>{field}</TableCell>
+
           <TableCell>{value}</TableCell>
         </TableRow>
       );

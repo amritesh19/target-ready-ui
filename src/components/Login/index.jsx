@@ -25,6 +25,9 @@ const Login = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    localStorage.setItem('role',role);
+    localStorage.setItem('id',id);
+    let userStatus = localStorage.getItem('role');
     console.log("Role:", role, "ID:", id);
 
     try {
@@ -33,8 +36,10 @@ const Login = () => {
       );
       //console.log(response);
       alert.showAlertWithMessage(response.data, "success");
+      localStorage.setItem('classid',"");
       const userData = { role, id };
       login(userData);
+
       navigate("/calendar");
     } catch (error) {
       //console.log(error);

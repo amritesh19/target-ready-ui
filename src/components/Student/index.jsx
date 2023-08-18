@@ -71,7 +71,7 @@ const Student = () => {
 
   useEffect(() => {
     fetchData();
-  }, []);
+  },[]);
 
   const fetchData = () => {
     try{
@@ -103,9 +103,8 @@ const Student = () => {
   };
 
   const handleAdd = () => {
-
+      setNewStudentData([]);
       setOpenAddDialog(true);
-
   };
 
 
@@ -173,6 +172,9 @@ const Student = () => {
             (student) => student.studentId !== studentId
           )
         );
+        console.log("hi");
+        console.log(response.data);
+        console.log("hi");
         alert.showAlertWithMessage(response.data, "success");
       })
       .catch((error) => {
